@@ -1,0 +1,29 @@
+{
+  "name": "ProfilesPostgresConnector",
+  "config": {
+    "connector.class": "PostgresSource",
+    "name": "ProfilesPostgresConnector",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<kafka_api_key>",
+    "kafka.api.secret": "<kafka_api_secret>",
+    "connection.host": "<postgres_db_host>",
+    "connection.port": "<postgres_db_port>",
+    "connection.user": "<postgres_user_name>",
+    "connection.password": "<postgres_user_password>",
+    "db.name": "<postgres_db_name>",
+    "ssl.mode": "require",
+    "ssl.rootcertfile": "<postgres_cert>",
+    "table.whitelist": "user_profiles, driver_profiles",
+    "incrementing.column.name": "id",
+    "table.types": "TABLE",
+    "db.timezone": "US/Central",
+    "mode": "incrementing",
+    "output.data.format": "JSON",
+    "tasks.max": "1",
+    "transforms": "AddKey,ExtractKey",
+    "transforms.AddKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.AddKey.fields": "id",
+    "transforms.ExtractKey.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.ExtractKey.field": "id"
+  }
+}

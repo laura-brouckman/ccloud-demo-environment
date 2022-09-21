@@ -1,5 +1,5 @@
 map/node_modules/
-map/client/node_modules/
+map/map-client/node_modules/
 vehicles/env
 .DS_Store
 map/.vscode/launch.json

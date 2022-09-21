@@ -2,35 +2,40 @@
 
 ## Setting up your Postgres database
 
-The driver and user profiles are stored in a Postgres database. To populate the database, create 2 tables:
+The driver and rider profiles are stored in a Postgres database. To populate the database, create 2 tables:
 
 ```
-CREATE TABLE user_profiles
+CREATE TABLE rider_profiles
   (
-    id integer PRIMARY KEY NOT NULL UNIQUE,
-    name character varying(128) NOT NULL,
+    id SERIAL PRIMARY KEY NOT NULL,
+    riderid character varying(50) NOT NULL,
+    firstname character varying(128) NOT NULL,
+    lastname character varying(128) NOT NULL,
     rating float,
-    date_created timestamp without time zone DEFAULT now() NOT NULL
+    timestamp timestamp without time zone DEFAULT now() NOT NULL
   );
 
 CREATE TABLE driver_profiles
   (
-    id integer PRIMARY KEY NOT NULL UNIQUE,
-    name character varying(128) NOT NULL,
+    id SERIAL PRIMARY KEY NOT NULL,
+    driverid character varying(50) NOT NULL,
+    firstname character varying(128) NOT NULL,
+    lastname character varying(128) NOT NULL,
     rating float,
-    date_created timestamp without time zone DEFAULT now() NOT NULL,
-    vehicle_id integer NOT NULL UNIQUE
+    make varchar(50) not null,
+    model varchar(50) not null,
+    timestamp timestamp without time zone DEFAULT now() NOT NULL
   );
 ```
 
 Using psql, populate these tables with the sample data provided in the csv files:
 
 ```
-psql -h <host> -U <user> -d <dbname> -c "\copy user_profiles FROM './user_profiles.csv' with (format csv,header true, delimiter ',');"
-# COPY 20
+psql -h <host> -U <user> -d <dbname> -c "\copy rider_profiles (riderid, firstname, lastname, rating) FROM './rider_profiles.csv' with (format csv,header true, delimiter ',');"
+# COPY 30
 
-psql -h <host> -U <user> -d <dbname> -c "\copy driver_profiles FROM './driver_profiles.csv' with (format csv,header true, delimiter ',');"
-# COPY 20
+psql -h <host> -U <user> -d <dbname> -c "\copy driver_profiles (driverid, firstname, lastname, rating, make, model) FROM './driver_profiles.csv' with (format csv,header true, delimiter ',');"
+# COPY 15
 ```
 
 ## Connecting Postgres to Confluent Cloud
@@ -58,7 +63,7 @@ The settings are:
 | Field Name | Value |
 | --------------------------- | ------------------------------------- |
 | Output record value format | JSON |
-| Table names | user_profiles, driver_profiles |
+| Table names | rider_profiles, driver_profiles |
 | Table type | TABLE |
 | Database timezone | your timezone |
 

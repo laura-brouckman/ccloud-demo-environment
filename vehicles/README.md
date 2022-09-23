@@ -36,6 +36,7 @@ In order for the producers to connect to your Confluent Cloud cluster, you will 
 ## Create Topic
 
 In the Confluent Cloud UI, navigate to `Topics` and create a topic called `vehicle_locations`. This will be the topic that each vehicle produces its location data to.
+Create the topic with 1 partition.
 
 ## Run the code
 

@@ -1,19 +1,44 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const VehicleMarker = (props) => {
-  console.log(props);
-  const { driverid, riderid, latitude, longitude } = props;
+  const {
+    driverFirstName,
+    driverLastName,
+    driverRating,
+    vehicleMake,
+    vehicleModel,
+    riderFirstName,
+    riderLastName,
+    riderRating,
+    latitude,
+    longitude,
+  } = props;
   return (
     <Marker position={[latitude, longitude]}>
       <Popup>
-        <div>Driver {driverid} </div>
-        <div>{riderid != null ? `Rider ${riderid}` : "No rider"} </div>
+        <div>
+          <div>
+            <b>Driver: </b> {driverFirstName} {driverLastName} ({driverRating}
+            &#9733;)
+          </div>
+          <div>
+            <b>Vehicle: </b>
+            {vehicleModel} {vehicleMake}
+          </div>
+          <div>
+            <b>Rider: </b>{" "}
+            {riderFirstName
+              ? `${riderFirstName} ${riderLastName} (${riderRating}★)`
+              : "No rider"}
+          </div>
+        </div>
       </Popup>
     </Marker>
   );
 };
 
 export const Map = ({ data }) => {
+  console.log("Data is ", data);
   return (
     <MapContainer center={[47.607088939995585, -122.32795715332033]} zoom={11}>
       <TileLayer
@@ -25,5 +50,4 @@ export const Map = ({ data }) => {
       ))}
     </MapContainer>
   );
-  // return <MapContainer bounds={MAP_BOUNDS} scrollWheelZoom={true} />;
 };

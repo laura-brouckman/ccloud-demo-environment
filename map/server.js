@@ -2,7 +2,7 @@ const os = require("os");
 const Kafka = require("node-rdkafka");
 const { createConfigMap } = require("./utils");
 
-const TOPICS = ["vehicle_locations"];
+const TOPICS = ["vehicle_locations_with_drivers_and_riders"];
 const CONFIG_FILE = "./client.properties";
 const CLIENT_ID = "map-application-consumer";
 
@@ -16,19 +16,23 @@ async function setupConsumer() {
       waitInterval: 0,
     }
   );
-
   stream.on("data", function (data) {
     if (data && data.value) {
       try {
         const parsedData = JSON.parse(data.value.toString());
-        console.log("parsed data", parsedData);
         const websocketMessage = {
-          key: data.key.toString(),
-          latitude: parseFloat(parsedData.lat),
-          longitude: parseFloat(parsedData.lon),
+          latitude: parseFloat(parsedData.LAT),
+          longitude: parseFloat(parsedData.LON),
           timestamp: data.timestamp,
-          riderid: parsedData.riderid,
-          driverid: parsedData.driverid,
+          driverid: parsedData.DRIVERID,
+          driverFirstName: parsedData.DRIVER_FIRSTNAME,
+          driverLastName: parsedData.DRIVER_LASTNAME,
+          driverRating: parsedData.DRIVER_RATING,
+          vehicleMake: parsedData.VEHICLE_MAKE,
+          vehicleModel: parsedData.VEHICLE_MODEL,
+          riderFirstName: parsedData.RIDER_FIRSTNAME,
+          riderLastName: parsedData.RIDER_LASTNAME,
+          riderRating: parsedData.RIDER_RATING,
         };
         io.sockets.emit("location_update", websocketMessage);
       } catch (e) {
@@ -42,6 +46,7 @@ async function setupConsumer() {
 const express = require("express");
 const app = express();
 const path = require("path");
+const { parse } = require("path");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
   cors: {

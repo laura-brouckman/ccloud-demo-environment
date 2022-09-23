@@ -16,14 +16,13 @@ function useSocket() {
       setIsConnected(false);
     });
     socket.on("location_update", (msg) => {
-      const { key } = msg;
+      const { driverid } = msg;
       setMessagesByDriverId((prevMessages) => ({
         ...prevMessages,
-        [key]: msg,
+        [driverid]: msg,
       }));
     });
     return () => {
-      console.log("unmounting");
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pong");

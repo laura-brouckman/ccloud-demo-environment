@@ -8,7 +8,6 @@ The driver and rider profiles are stored in a Postgres database. To populate the
 CREATE TABLE rider_profiles
   (
     id SERIAL PRIMARY KEY NOT NULL,
-    riderid character varying(50) NOT NULL,
     firstname character varying(128) NOT NULL,
     lastname character varying(128) NOT NULL,
     rating float,
@@ -18,7 +17,6 @@ CREATE TABLE rider_profiles
 CREATE TABLE driver_profiles
   (
     id SERIAL PRIMARY KEY NOT NULL,
-    driverid character varying(50) NOT NULL,
     firstname character varying(128) NOT NULL,
     lastname character varying(128) NOT NULL,
     rating float,
@@ -31,10 +29,10 @@ CREATE TABLE driver_profiles
 Using psql, populate these tables with the sample data provided in the csv files:
 
 ```
-psql -h <host> -U <user> -d <dbname> -c "\copy rider_profiles (riderid, firstname, lastname, rating) FROM './rider_profiles.csv' with (format csv,header true, delimiter ',');"
+psql -h <host> -U <user> -d <dbname> -c "\copy rider_profiles (firstname, lastname, rating) FROM './rider_profiles.csv' with (format csv,header true, delimiter ',');"
 # COPY 30
 
-psql -h <host> -U <user> -d <dbname> -c "\copy driver_profiles (driverid, firstname, lastname, rating, make, model) FROM './driver_profiles.csv' with (format csv,header true, delimiter ',');"
+psql -h <host> -U <user> -d <dbname> -c "\copy driver_profiles (firstname, lastname, rating, make, model) FROM './driver_profiles.csv' with (format csv,header true, delimiter ',');"
 # COPY 15
 ```
 

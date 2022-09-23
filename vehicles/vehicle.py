@@ -70,7 +70,7 @@ class Vehicle():
             line = lines[pos].strip()
             self.producer.poll(0)
             [lat,lon] = line.split(',')
-            msg = {"driverid": self.driver_id, "riderid": curr_rider, "lat": float(lat), "lon": float(lon)}
+            msg = {"driverid": int(self.driver_id), "riderid": curr_rider, "lat": float(lat), "lon": float(lon)}
             # Produce a message to the topic that contains the rider and driver ids and the vehicle location
             self.producer.produce(
                 KAFKA_TOPIC,
@@ -82,7 +82,7 @@ class Vehicle():
             ride_length = ride_length - 1
             if ride_length <= 0 and curr_rider != None:
                 dropoff_rider(curr_rider)
-                print("Driver " + str(self.driver_id) + " dropping up rider " + str(curr_rider))
+                print("Driver " + str(self.driver_id) + " dropping off rider " + str(curr_rider))
                 curr_rider = None
 
 if __name__ == '__main__':

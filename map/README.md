@@ -6,7 +6,11 @@ To get all of this information into one stream of data, we can use ksqlDB to joi
 
 ## Create a ksqlDB cluster
 
-(instructions)
+Navigate to your cluster, then select ksqlDB.
+
+Hit "Create a new application", give your application global permissions, and leave in the default sizing.
+
+It may take a few minutes for your ksqlDB cluster to be ready.
 
 ## Create ksqlDB tables for rider and driver profiles.
 

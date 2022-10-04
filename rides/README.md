@@ -20,29 +20,15 @@ EMIT CHANGES;
 
 ## Create a sink
 
-Now that we have our `rides` topic available to consume, we can send it to a downstream service for future use! In this demo, we set up a simple Snowflake connector.
+Now that we have our `rides` topic available to consume, we can send it to a downstream service for future use! In this demo, we set up a simple Snowflake connector:
 
-In the Confluent Cloud UI, navigate to your cluster and then to Data Integration --> Connectors. Look for the Snowflake Sinke and select it.
-
-### Topic Selection
-
-Select `rides`
-
-### Kafka credentials
-
-The next step is to create an API key for the connector. For the demo, you can use Global Access.
-
-### Authentication
-
-Next, you will be asked to enter information about your Snowfl database, including the host, port, connection credentials, database name, and SSL credentials.
-
-Create a table in Snowflake with the following:
+1. Create a table in Snowflake with the following:
 
 ```
-create table rides_1 (
+create table rides (
 	RECORD_CONTENT variant,
 	RECORD_METADATA variant
 );
 ```
 
-Then, follow this [guide](https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink.html) to set up a fully-managed Snowflake connector.
+2. Then, follow this [guide](https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink.html) to set up a fully-managed Snowflake connector.
